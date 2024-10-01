@@ -519,6 +519,20 @@ figure figcaption {
   color: #999999;
 }
 
+figure {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0; 
+}
+
+figure img {
+  display: block; 
+  max-width: 100%; 
+  object-fit: cover;
+}
+
+
 #fh5co-offcanvas {
   background: #fff;
   position: fixed;
