@@ -3,8 +3,6 @@
 	'use strict';
 
 
-
-	// iPad and iPod detection	
 	var isiPad = function(){
 		return (navigator.platform.indexOf("iPad") != -1);
 	};
@@ -18,8 +16,6 @@
 
 	
 	
-
-	// Click outside of offcanvass
 	var mobileMenuOutsideClick = function() {
 
 		$(document).click(function (e) {
@@ -59,9 +55,6 @@
 
 	
 
-	
-
-	// Burger Menu
 	var burgerMenu = function() {
 
 		$('body').on('click', '.js-fh5co-nav-toggle', function(event){
@@ -110,9 +103,6 @@
 	};
 
 
-	
-
-	// Page Nav
 	var clickMenu = function() {
 		var topVal = ( $(window).width() < 769 ) ? 0 : 58;
 
@@ -172,16 +162,13 @@
 	};
 
 
-	// Document on load.
 	$(function(){
 
 		mobileMenuOutsideClick();
 		burgerMenu();
 		scrolledWindow();
 		
-		// Animations
 		contentWayPoint();
-		
 		
 
 	});
