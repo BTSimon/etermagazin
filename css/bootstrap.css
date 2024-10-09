@@ -1428,7 +1428,8 @@ img {
 
 .img-responsive {
   display: block;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1200px;
   height: auto;
 }
 
@@ -1926,8 +1927,6 @@ pre code {
 }
 
 .container {
-  margin-right: auto;
-  margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -1968,10 +1967,12 @@ pre code {
   clear: both;
 }
 
+/*
 .row {
   margin-left: -15px;
   margin-right: -15px;
 }
+  */
 .row:before, .row:after {
   content: " ";
   display: table;

@@ -377,6 +377,7 @@ p {
   margin-bottom: 110px;
   padding-left: 3em;
   padding-right: 3em;
+  max-width: 1200px;
 }
 @media screen and (max-width: 1200px) {
   .fh5co-post-entry article {
@@ -404,6 +405,7 @@ p {
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
+  width: 100%;
 }
 .fh5co-post-entry article a:hover img {
   opacity: .4;
@@ -530,6 +532,7 @@ figure img {
   display: block; 
   max-width: 100%; 
   object-fit: cover;
+  height: auto;
 }
 
 
@@ -791,7 +794,26 @@ figure img {
 }
 
 .section-divider {
-  border-top: 1px solid #999; 
-  margin: 40px 0; 
-  margin-bottom: 40px 0;
+  border-top: 2px solid #000; 
+  margin: 20px;
+}
+
+.cattitle {
+  color: #000;
+  margin: 40px;
+  font-size: 30px;
+  font-family: 'playfair display';
+  font-weight: bold;
+}
+
+.container-fluid {
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+body, html {
+  overflow-x: hidden;
 }
