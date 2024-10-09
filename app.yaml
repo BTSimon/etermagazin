@@ -15,3 +15,6 @@ handlers:
   - url: /single.html
     static_files: single.html
     upload: single.html
+  - url: /category1
+    static_files: catpage1.html
+    upload: catpage1.html
