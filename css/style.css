@@ -215,7 +215,7 @@ p {
   z-index: 1000; 
   padding: 20px; 
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 3em 3em;
+  padding: 1.5em 1.5em;
   float: left;
   width: 100%;
 }
@@ -232,26 +232,26 @@ p {
 }
 #fh5co-header .fh5co-nav-toggle {
   position: absolute;
-  top: 4.2em;
+  top: 2.7em;
   left: 3em;
   z-index: 99;
 }
 @media screen and (max-width: 1200px) {
   #fh5co-header .fh5co-nav-toggle {
-    top: 4em;
+    top: 2.5em;
     left: 15px;
   }
 }
 @media screen and (max-width: 768px) {
   #fh5co-header .fh5co-nav-toggle {
-    top: 2.5em;
+    top: 1em;
     left: 15px;
   }
 }
 #fh5co-header .fh5co-social {
   position: absolute !important;
   right: 3em !important;
-  top: 3.2em;
+  top: 1.7em;
   z-index: 99;
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
@@ -260,27 +260,26 @@ p {
 @media screen and (max-width: 1200px) {
   #fh5co-header .fh5co-social {
     right: 15px !important;
-    top: 3.2em;
+    top: 1.7em;
   }
 }
 @media screen and (max-width: 768px) {
   #fh5co-header .fh5co-social {
     right: 15px !important;
-    top: 1.5em;
+    top: 0em;
   }
 }
 @media screen and (max-width: 480px) {
   #fh5co-header .fh5co-social {
     right: inherit !important;
     left: inherit !important;
-    top: 5em;
+    top: 3.5em;
     left: 50% !important;
     margin-left: -50px;
   }
 }
 @media screen and (max-width: 768px) {
   #fh5co-header {
-    padding-top: 1.5em;
     padding-bottom: 1.5em;
     padding-left: 15px;
     padding-right: 15px;
@@ -848,5 +847,5 @@ figure img {
 }
 
 .first-article {
-  margin-top: 250px;
+  margin-top: 170px;
 }
