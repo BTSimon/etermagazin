@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <form id="articleForm" action="/admin/add-article" method="POST">
+        <label for="title">Cikk Címe:</label><br>
+        <input type="text" id="title" name="title" required><br>
+        <label for="content">Cikk Tartalma:</label><br>
+        <textarea id="content" name="content" required></textarea><br><br>
+        <button type="submit">Cikk Hozzáadása</button>
+    </form>    
+</body>
+</html>
