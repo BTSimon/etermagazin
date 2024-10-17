@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Cikk 1",
+    "author": "Admin",
+    "content": "Szöveg",
+    "date": "2024-10-16"
+  },
+  {
+    "id": 2,
+    "title": "Cikk 2",
+    "author": "Admin",
+    "content": "Szöveg",
+    "date": "2024-10-17"
+  },
+  {
+    "id": 1729173085657,
+    "title": "AA",
+    "content": "aa",
+    "date": "2024-10-17"
+  }
+]
