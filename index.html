@@ -18,7 +18,7 @@
 	<meta name="twitter:card" content="" />
 
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="shortcut icon" href="images/Logo.jpg">
 	<!-- Google Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,700,400italic|Roboto:400,300,700' rel='stylesheet' type='text/css'>
 	<!-- Animate -->
@@ -60,11 +60,11 @@
 			<div class="fh5co-box">
 				<h3 class="heading">Kategóriák</h3>
 				<ul>
-					<li><a href="catpage1.html">Kategória 1</a></li>
-					<li><a href="catpage1.html">Kategória 2</a></li>
-					<li><a href="catpage1.html">Kategória 3</a></li>
-					<li><a href="catpage1.html">Kategória 4</a></li>
-					<li><a href="catpage1.html">Kategória 5</a></li>
+					<li><a href="/categoryone">Kategória 1</a></li>
+					<li><a href="/categoryone">Kategória 2</a></li>
+					<li><a href="/categoryone">Kategória 3</a></li>
+					<li><a href="/categoryone">Kategória 4</a></li>
+					<li><a href="/categoryone">Kategória 5</a></li>
 				</ul>
 			</div>
 			<div class="fh5co-box">
@@ -140,7 +140,7 @@
 			</div>
 		</div>
 
-		<h2 class="fh5co-category-title"><a class="cattitle" href="catpage1.html">Kategória 1</a></h2>
+		<h2 class="fh5co-category-title"><a class="cattitle" href="/categoryone">Kategória 1</a></h2>
 		<!-- Szürke elválasztó -->
 		<div class="row">
             <div class="col-lg-12 col-md-12">
@@ -185,7 +185,7 @@
 					<span class="fh5co-meta fh5co-date">2024 Szeptember 15</span>
 				</article>
 
-			<h2 class="fh5co-category-title"><a class="cattitle" href="catpage1.html">Kategória 2</a></h2>
+			<h2 class="fh5co-category-title"><a class="cattitle" href="/categoryone">Kategória 2</a></h2>
 			<!-- Szürke elválasztó -->
 			<div class="row">
 				<div class="col-lg-12 col-md-12">
@@ -228,7 +228,7 @@
 					<span class="fh5co-meta fh5co-date">2024 Szeptember 15</span>
 				</article>
 
-			<h2 class="fh5co-category-title"><a class="cattitle" href="catpage1.html">Kategória 3</a></h2>
+			<h2 class="fh5co-category-title"><a class="cattitle" href="/categoryone">Kategória 3</a></h2>
 			<!-- Szürke elválasztó -->
 			<div class="row">
 				<div class="col-lg-12 col-md-12">
@@ -271,7 +271,7 @@
 					<span class="fh5co-meta fh5co-date">2024 Szeptember 15</span>
 				</article>
 
-			<h2 class="fh5co-category-title"><a class="cattitle" href="catpage1.html">Kategória 4</a></h2>
+			<h2 class="fh5co-category-title"><a class="cattitle" href="/categoryone">Kategória 4</a></h2>
 			<!-- Szürke elválasztó -->
 			<div class="row">
 				<div class="col-lg-12 col-md-12">
@@ -344,6 +344,23 @@
 			</div>
         </div>
 	</div>
+
+	<div id="articles"></div>
+
+	s
+	<script>
+		fetch('/articles.json')
+			.then(response => response.json())
+			.then(data => {
+				const articleContainer = document.getElementById('articles');
+				data.forEach(article => {
+					const articleElement = document.createElement('div');
+					articleElement.innerHTML = `<h2>${article.title}</h2><p>${article.content}</p>`;
+					articleContainer.appendChild(articleElement);
+				});
+			});
+	</script>
+
 	<footer id="fh5co-footer">
 		<p><small>&copy; Éter Magazin 2024 ©</p>
 	</footer>
