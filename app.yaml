@@ -1,20 +1,22 @@
 runtime: php81 
 env: standard
+env_variables:
+  NODE_ENV: 'production'
 automatic_scaling:
   target_cpu_utilization: 0.65
   min_instances: 1
 handlers:
   - url: /static
     static_dir: static
-  - url: /(.*\.(css|js|png|jpg|ico|ttf|woff))
+  - url: /(.*\.(css|js|png|jpg|ico|ttf|woff|ico))
     static_files: \1
-    upload: (.*\.(css|js|png|jpg|ico|ttf|woff))
+    upload: (.*\.(css|js|png|jpg|ico|ttf|woff|ico))
   - url: /
     static_files: index.html
     upload: index.html
   - url: /single.html
     static_files: single.html
     upload: single.html
-  - url: /category1
+  - url: /categoryone
     static_files: catpage1.html
     upload: catpage1.html
