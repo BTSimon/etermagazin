@@ -4,27 +4,184 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .admin-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 200px;
+            width: 500px;
+        }
+        .admin-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .admin-container input[type="text"], .admin-container input {
+            width: calc(100% - 1px);
+            max-width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .admin-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #00a2ff;
+            margin-bottom: 5px;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .admin-container button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Admin Panel</h1>
-    <form action="/admin/add-article" method="POST">
-        <label for="title">Cím:</label>
-        <input type="text" id="title" name="title" required><br>
-      
-        <label for="category">Kategória:</label>
-        <input type="text" id="category" name="category" required><br>
-      
-        <label for="imgUrl">Kép URL:</label>
-        <input type="text" id="imgUrl" name="imgUrl" required><br>
-      
-        <label for="date">Dátum:</label>
-        <input type="date" id="date" name="date" required><br>
-      
-        <label for="content">Tartalom:</label>
-        <textarea id="content" name="content" required></textarea><br>
-      
-        <button type="submit">Cikk Hozzáadása</button>
-      </form>
-      
+    <div class="admin-container">
+        <h1>Cikk Hozzáadása</h1>
+        <form action="/admin/add-article" method="POST">
+            <label for="title">Cím:</label>
+            <input type="text" id="title" name="title" required><br>
+        
+            <label for="category">Kategória:</label>
+            <input type="text" id="category" name="category" required><br>
+        
+            <label for="imgUrl">Kép URL:</label>
+            <input type="text" id="imgUrl" name="imgUrl" required><br>
+        
+            <label for="date">Dátum:</label>
+            <input type="date" id="date" name="date" required><br>
+        
+            <label for="content">Tartalom:</label>
+            <textarea id="content" name="content" required></textarea><br>
+        
+            <button type="submit">Cikk Hozzáadása</button>
+        </form>
+        <h1>Aktív Cikkek</h1>
+        <div id="articles-active"></div>
+    </div>
+
+
+    <script>
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            alert('You must log in as an admin to access this page.');
+            window.location.href = '/login.html'; // Redirect to login page
+        }
+        window.onload = function () {
+            fetch('articles.json')
+                .then(response => response.json())
+                .then(articles => {
+                    const container = document.getElementById('articles-active');
+                    articles.forEach(article => {
+                        const titleLine = document.createElement('h2');
+                        if (article.active == true) {
+                            titleLine.innerHTML = `
+                                ${article.title} 
+                                <a href="${article.path}">
+                                    <button type="button">Megtekint</button>
+                                </a> 
+                                <button type="button">Szerkeszt</button> 
+                                <form class="inactivate-form">
+                                    <input type="hidden" name="id" value="${article.id}">
+                                    <button type="submit">Inaktivál</button>
+                                </form>`;
+                            container.appendChild(titleLine);
+                        }
+                        if (article.active == false) {
+                            titleLine.innerHTML = `
+                                ${article.title} 
+                                <a href="${article.path}">
+                                    <button type="button">Megtekint</button>
+                                </a> 
+                                <button type="button">Szerkeszt</button> 
+                                <form class="activate-form">
+                                    <input type="hidden" name="id" value="${article.id}">
+                                    <button type="submit">Aktivál</button>
+                                </form>`;
+                            container.appendChild(titleLine);
+                        }
+                    });
+    
+                    const forms = document.querySelectorAll('.inactivate-form');
+                    forms.forEach(form => {
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+                            const formData = new FormData(form);
+                            const id = formData.get('id');
+    
+                            fetch('/admin/inactivate-article', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ id })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Server response:', data);
+                                    if (data.error) {
+                                        alert(`Error: ${data.error}`);
+                                    } else {
+                                        alert('Article inactivated successfully!');
+                                    }
+                                })
+                                .catch(err => {
+                                    console.error('Error submitting form:', err);
+                                    alert('An error occurred. Check console for details.');
+                                });
+                        });
+                    });
+                    const forms2 = document.querySelectorAll('.activate-form');
+                    forms2.forEach(form => {
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+                            const formData = new FormData(form);
+                            const id = formData.get('id');
+    
+                            fetch('/admin/activate-article', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ id })
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log('Server response:', data);
+                                    if (data.error) {
+                                        alert(`Error: ${data.error}`);
+                                    } else {
+                                        alert('Article activated successfully!');
+                                    }
+                                })
+                                .catch(err => {
+                                    console.error('Error submitting form:', err);
+                                    alert('An error occurred. Check console for details.');
+                                });
+                        });
+                    });
+                });
+        };
+    </script>
+    
 </body>
 </html>
