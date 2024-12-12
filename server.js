@@ -4,27 +4,43 @@ const path = require('path');
 const fs = require("fs");
 const app = express();
 const port = 3000;
+const { v4: uuidv4 } = require('uuid');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 let articles = [];
+const jsonFilePath = 'articles.json';
 
 app.use(express.static(path.join()));
+app.use(express.json());
+
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join('index.html'));
-  fs.readFile('articles.json', (err, data) => {
-    if (err) {
-        console.error('Error reading JSON file', err);
-        res.send('Error loading articles');
-        return;
-    }
-
-    const articles = JSON.parse(data);
-
-    res.render('index', { articles });
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+
+
+app.get('/api/articles', (req, res) => {
+    fs.readFile('articles.json', 'utf-8', (err, data) => {
+        if (err) {
+            console.error('Error reading JSON file:', err);
+            return res.status(500).json({ error: 'Failed to load articles' });
+        }
+
+        try {
+            const articles = JSON.parse(data);
+            res.json(articles); 
+        } catch (parseError) {
+            console.error('Error parsing JSON file:', parseError);
+            return res.status(500).json({ error: 'Failed to parse articles' });
+        }
+    });
 });
 
 
@@ -43,6 +59,74 @@ else {
 }
 });
   
+app.post('/admin/inactivate-article', express.json(), (req, res) => {
+    const { id } = req.body; 
+
+    fs.readFile('articles.json', 'utf-8', (err, data) => {
+        if (err) {
+            console.error('Error reading articles.json:', err);
+            return res.status(500).json({ error: 'Failed to load articles' });
+        }
+
+        try {
+            const articles = JSON.parse(data);
+
+            const article = articles.find(article => article.id === id);
+            if (!article) {
+                return res.status(404).json({ error: 'Article not found' });
+            }
+
+            article.active = false; 
+
+            fs.writeFile('articles.json', JSON.stringify(articles, null, 2), 'utf-8', writeErr => {
+                if (writeErr) {
+                    console.error('Error writing to articles.json:', writeErr);
+                    return res.status(500).json({ error: 'Failed to update articles' });
+                }
+
+                res.status(200).json({ message: 'Article inactivated successfully' });
+            });
+        } catch (parseError) {
+            console.error('Error parsing articles.json:', parseError);
+            return res.status(500).json({ error: 'Failed to parse articles' });
+        }
+    });
+});
+
+app.post('/admin/activate-article', express.json(), (req, res) => {
+    const { id } = req.body; 
+
+    fs.readFile('articles.json', 'utf-8', (err, data) => {
+        if (err) {
+            console.error('Error reading articles.json:', err);
+            return res.status(500).json({ error: 'Failed to load articles' });
+        }
+
+        try {
+            const articles = JSON.parse(data);
+
+            const article = articles.find(article => article.id === id);
+            if (!article) {
+                return res.status(404).json({ error: 'Article not found' });
+            }
+
+            article.active = true; 
+
+            fs.writeFile('articles.json', JSON.stringify(articles, null, 2), 'utf-8', writeErr => {
+                if (writeErr) {
+                    console.error('Error writing to articles.json:', writeErr);
+                    return res.status(500).json({ error: 'Failed to update articles' });
+                }
+
+                res.status(200).json({ message: 'Article activated successfully' });
+            });
+        } catch (parseError) {
+            console.error('Error parsing articles.json:', parseError);
+            return res.status(500).json({ error: 'Failed to parse articles' });
+        }
+    });
+});
+
 
 app.post('/admin/add-article', (req, res) => {
     const { title, category, imgUrl, date, content } = req.body;
@@ -174,14 +258,52 @@ app.post('/admin/add-article', (req, res) => {
     }
   
     fs.writeFileSync(articlePath, articleHtml, 'utf8');
+	const active = true;
+	const id = uuidv4();
   
-    const articleData = { title, category, imgUrl, date, content, path: articlePath };
-    const articles = JSON.parse(fs.readFileSync('prioArticles.json', 'utf8') || '[]');
+    const articleData = { id, title, category, imgUrl, date, content, path: articlePath, active };
+    const articles = JSON.parse(fs.readFileSync('articles.json', 'utf8') || '[]');
     articles.push(articleData);
-    fs.writeFileSync('prioArticles.json', JSON.stringify(articles, null, 2));
+    fs.writeFileSync('articles.json', JSON.stringify(articles, null, 2));
   
     res.send('Article added and new page generated successfully!');
 });
+
+function isAdmin(req, res, next) {
+    const token = req.headers['authorization']?.split(' ')[1];
+
+    if (!token) {
+        return res.status(403).json({ error: 'Access denied. No token provided.' });
+    }
+
+    jwt.verify(token, 'your-secret-key', (err, decoded) => {
+        if (err || decoded.role !== 'admin') {
+            return res.status(403).json({ error: 'Access denied. Invalid token.' });
+        }
+        next();
+    });
+}
+
+
+const jwt = require('jsonwebtoken');
+
+app.post('/admin/login', (req, res) => {
+    const { username, password } = req.body;
+
+    const adminCredentials = {
+        username: 'admin',
+        password: '4186fbee',
+    };
+
+    if (username === adminCredentials.username && password === adminCredentials.password) {
+        const token = jwt.sign({ role: 'admin' }, 'your-secret-key', { expiresIn: '30s' }); // Create JWT
+        res.status(200).json({ token });
+    } else {
+        res.status(401).json({ error: 'Invalid credentials' });
+    }
+});
+
+
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
