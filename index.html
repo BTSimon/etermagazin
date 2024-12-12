@@ -198,7 +198,7 @@
 				const containercatfour = document.getElementById('articles-container-catfour');
 
                 articles.forEach(article => {
-					if (article.category == "Prioritized") {
+					if (article.category == "Prioritized" && article.active == true) {
 						const articleElement = document.createElement('article');
 						articleElement.className = 'col-lg-3 col-md-3 col-sm-6 col-xs-6 animate-box';
 						articleElement.style.opacity = 0;
@@ -221,7 +221,7 @@
 						articleElement.style.transition = 'opacity 0.5s ease-in-out';
 						articleElement.style.opacity = 1;
 					}
-					if (article.category == "Kategória 1") {
+					if (article.category == "Kategória 1"  && article.active == true) {
 						const articleElement = document.createElement('article');
 						articleElement.className = 'col-lg-3 col-md-3 col-sm-6 col-xs-6 animate-box';
 						articleElement.style.opacity = 0; 
@@ -248,7 +248,7 @@
 						articleElement.style.opacity = 1;
 					}
 
-					if (article.category == "Kategória 2") {
+					if (article.category == "Kategória 2"  && article.active == true) {
 						const articleElement = document.createElement('article');
 						articleElement.className = 'col-lg-3 col-md-3 col-sm-6 col-xs-6 animate-box';
 						articleElement.style.opacity = 0; 
@@ -275,7 +275,7 @@
 						articleElement.style.opacity = 1;
 					}
 
-					if (article.category == "Kategória 3") {
+					if (article.category == "Kategória 3"  && article.active == true) {
 						const articleElement = document.createElement('article');
 						articleElement.className = 'col-lg-3 col-md-3 col-sm-6 col-xs-6 animate-box';
 						articleElement.style.opacity = 0; 
@@ -302,7 +302,7 @@
 						articleElement.style.opacity = 1;
 					}
 
-					if (article.category == "Kategória 4") {
+					if (article.category == "Kategória 4"  && article.active == true) {
 						const articleElement = document.createElement('article');
 						articleElement.className = 'col-lg-3 col-md-3 col-sm-6 col-xs-6 animate-box';
 						articleElement.style.opacity = 0; 

@@ -161,6 +161,41 @@
 
 	};
 
+	function loginAdmin() {
+		fetch('/admin/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				username: 'admin',
+				password: '4186fbee',
+			}),
+		})
+		.then(response => response.json())
+		.then(data => {
+			if (data.token) {
+				localStorage.setItem('adminToken', data.token);
+				alert('Logged in successfully!');
+			} else {
+				alert('Invalid credentials');
+			}
+		})
+		.catch(error => console.error('Error logging in:', error));
+	}
+	
+	function fetchWithAuth(url, options = {}) {
+		const token = localStorage.getItem('adminToken');
+		return fetch(url, {
+			...options,
+			headers: {
+				...options.headers,
+				'Authorization': `Bearer ${token}`,
+			},
+		});
+	}
+	
+
 
 	$(function(){
 
