@@ -84,7 +84,7 @@ app.post('/admin/inactivate-article', express.json(), (req, res) => {
                     return res.status(500).json({ error: 'Failed to update articles' });
                 }
 
-                res.status(200).json({ message: 'Article inactivated successfully' });
+                res.status(200).json({ message: 'Article inactivated successfully', redirectUrl: '/admin' });
             });
         } catch (parseError) {
             console.error('Error parsing articles.json:', parseError);
@@ -118,7 +118,7 @@ app.post('/admin/activate-article', express.json(), (req, res) => {
                     return res.status(500).json({ error: 'Failed to update articles' });
                 }
 
-                res.status(200).json({ message: 'Article activated successfully' });
+                res.status(200).json({ message: 'Article activated successfully', redirectUrl: '/admin' })
             });
         } catch (parseError) {
             console.error('Error parsing articles.json:', parseError);
@@ -296,7 +296,7 @@ app.post('/admin/login', (req, res) => {
     };
 
     if (username === adminCredentials.username && password === adminCredentials.password) {
-        const token = jwt.sign({ role: 'admin' }, 'your-secret-key', { expiresIn: '30s' }); // Create JWT
+        const token = jwt.sign({ role: 'admin' }, 'your-secret-key', { expiresIn: '30s' });
         res.status(200).json({ token });
     } else {
         res.status(401).json({ error: 'Invalid credentials' });

@@ -7,7 +7,7 @@
     "date": "2024-10-20",
     "content": "This is a test text",
     "path": "articles\\test.html",
-    "active": true
+    "active": false
   },
   {
     "id": "af401173-7ba2-4b7a-9e17-767e4f03e38b",
@@ -17,6 +17,6 @@
     "date": "2024-12-11",
     "content": "This is also a test",
     "path": "articles\\yooo.html",
-    "active": true
+    "active": false
   }
 ]

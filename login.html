@@ -28,11 +28,13 @@
             text-align: center;
         }
         .login-container input[type="text"], .login-container input {
-            width: 100%;
+            width: calc(100% - 1px);
+            max-width: 100%;
             padding: 10px;
             margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            box-sizing: border-box;
         }
         .login-container button {
             width: 100%;

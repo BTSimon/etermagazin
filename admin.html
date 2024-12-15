@@ -88,7 +88,7 @@
         const token = localStorage.getItem('adminToken');
         if (!token) {
             alert('You must log in as an admin to access this page.');
-            window.location.href = '/login.html'; // Redirect to login page
+            window.location.href = '/login.html';
         }
         window.onload = function () {
             fetch('articles.json')
@@ -145,6 +145,9 @@
                                     } else {
                                         alert('Article inactivated successfully!');
                                     }
+                                    if (data.redirectUrl) {
+                                        window.location.href = data.redirectUrl;
+                                    }
                                 })
                                 .catch(err => {
                                     console.error('Error submitting form:', err);
@@ -171,6 +174,9 @@
                                         alert(`Error: ${data.error}`);
                                     } else {
                                         alert('Article activated successfully!');
+                                    }
+                                    if (data.redirectUrl) {
+                                        window.location.href = data.redirectUrl;
                                     }
                                 })
                                 .catch(err => {
