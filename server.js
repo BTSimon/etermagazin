@@ -17,7 +17,7 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'maintenance.html'));
 });
 
 app.get('/admin', (req, res) => {
